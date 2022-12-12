@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="./libs/babel.min.js"></script>
+    <script src="./libs/react.development.js"></script>
+    <script src="./libs/react-dom.development.js"></script>
+    <script type="text/babel">
+        class App extends React.Component {
+            constructor(props) {
+                //调用父类的构造函数
+                super(props);
+                // 设置局部状态数据
+                // 如果要改变state数据需要调用setState方法
+                this.state = {
+                    name: 'zs',
+                    age: 10
+                }
+            }
+            render() {
+                return <>
+                    <h3>{this.state.name}</h3>
+                    <button onClick={() => {
+                        // setState可以改变state的数据
+                        // setState是异步的，如果我们想获取改变之后的最新数据
+                        //  可以在setState的第二个参数中获取
+                        //  参数二是一个回调函数，这个函数在数据改变成功之后触发
+                        this.setState(
+                            {
+                                age: this.state.age + 1
+                            },
+                            () => {
+                                console.log(this.state.age);
+                            }
+                        );
+                        // console.log(this.state.age);
+                    }}>年龄:{this.state.age}</button>
+                </>
+            }
+
+        }
+        const container = ReactDOM.createRoot(document.querySelector('#root'));
+        container.render(<App />)
+    </script>
+</body>
+
+</html>
